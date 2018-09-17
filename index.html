@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Demo</title>
+    <script src="list.js" type="application/javascript"></script>
+</head>
+<body>
+    <select id="order">
+        <option value="asc">asc</option>
+        <option value="desc">desc</option>
+    </select>
+    <input id="limit" type="number" min="0" step="1">
+    <x-list-of-testtakers id="list">
+    </x-list-of-testtakers>
+    <script>
+        {
+            const list = document.getElementById('list');
+
+            fetch('/sample-data.json')
+                .then((body) => body.text())
+                .then((jsonString) => {
+                    list.setAttribute('list', jsonString);
+                });
+
+            const orderSelectEl = document.getElementById('order');
+
+            orderSelectEl.addEventListener('change', () => {
+                const order = orderSelectEl.options[orderSelectEl.selectedIndex].value;
+                list.setAttribute('order', order);
+            });
+
+            const limitEl = document.getElementById('limit');
+
+            limitEl.addEventListener('change', () => {
+                const limit = limitEl.value;
+                list.setAttribute('limit', limit);
+            });
+        }
+    </script>
+</body>
+</html>
